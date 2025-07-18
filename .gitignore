@@ -1,0 +1,27 @@
+/.metadata/
+
+# Java build files
+/target/
+*.class
+*.log
+*.jar
+*.war
+*.ear
+*.iml
+
+# IDE specific files
+# Eclipse / STS
+.project
+.classpath
+.settings/
+.metadata/
+
+# Build tool
+# Maven
+target/
+log/
+dependency-reduced-pom.xml
+build.log
+
+# sonarlint
+.sonarlint/
