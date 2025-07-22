@@ -18,7 +18,7 @@
 				<div
 					class="w-full p-4 bg-white border border-gray-200 rounded-lg shadow-sm sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
 					<form class="space-y-6" th:action="@{'/do-register'}" method="post"
-						th:object="${userForm}">
+						th:object="${userDTO}">
 						<h3 class="text-xl font-medium text-gray-900 dark:text-white">Signup</h3>
 						<p class="text-sm font-medium text-gray-900 dark:text-white">Start
 							managing your contact</p>
@@ -42,8 +42,9 @@
 						<div>
 							<label for="phone"
 								class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your
-								phone number:</label> <input type="number" maxlength=10 name="phone"
-								th:field="*{phone}" id="phone" placeholder="99XXXXXX11"
+								phone number:</label> <input type="number" maxlength=10
+								name="phoneNumber" th:field="*{phoneNumber}" id="phoneNumber"
+								placeholder="99XXXXXX11"
 								class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
 								required />
 						</div>
@@ -72,6 +73,18 @@
 		</div>
 	</div>
 
+	<script th:inline="javascript">
+		/* 	this attribute helps read the session value it looks like it is commented but it is not commented. */
+		let toastMessage = /*[[${toastMessage}]]*/null;
+		let toastType = /*[[${toastType}]]*/null;
+
+		console.log("Toast message:", toastMessage);
+		console.log("Toast type:", toastType);
+
+		if (toastMessage && toastType) {
+			showToast(toastMessage, toastType);
+		}
+	</script>
 </body>
 
 </html>

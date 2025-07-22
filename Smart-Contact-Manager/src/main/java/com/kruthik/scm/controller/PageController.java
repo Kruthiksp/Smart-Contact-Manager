@@ -4,7 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.kruthik.scm.forms.UserForm;
+import com.kruthik.scm.dtos.UserDTO;
 
 @Controller
 public class PageController {
@@ -35,9 +35,9 @@ public class PageController {
 
 	@GetMapping("/signup")
 	public String signup(Model model) {
-		
-		UserForm user = new UserForm();
-		model.addAttribute("userForm", user);
+
+		UserDTO userDTO = new UserDTO();
+		model.addAttribute("userDTO", userDTO);
 
 		return "register.html";
 	}

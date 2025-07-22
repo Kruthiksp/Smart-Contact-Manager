@@ -38,10 +38,14 @@ public class User {
 	private String password;
 	@Column(length = 2000)
 	private String profilePic;
+	@Builder.Default
 	private boolean enabled = false;
+	@Builder.Default
 	private boolean emailVerified = false;
+	@Builder.Default
 	private boolean phoneNumberVerified = false;
 	@Enumerated(EnumType.STRING)
+	@Builder.Default
 	private Providers provider = Providers.SELF;
 	private String providerId;
 

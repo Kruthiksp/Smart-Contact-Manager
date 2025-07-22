@@ -29,6 +29,7 @@ public class Contact {
 	@Column(nullable = false, length = 10)
 	private String phoneNumber;
 	private String profilePic;
+	@Builder.Default
 	private boolean favourite = false;
 	private LocalDate dob;
 

@@ -36,3 +36,36 @@ document.addEventListener("DOMContentLoaded", (event) => {
 	}
 
 });
+
+/*--------------------------------------------------------------------------------------------------------------------------------*/
+/*Toaster functionality*/
+
+function showToast(message, type) {
+	if (!message || !type) return;
+	
+	toastr.options = {
+			positionClass: 'toast-bottom-left',
+			timeOut: 5000,
+			closeButton: true,
+			progressBar: true,
+			newestOnTop: true,
+			preventDuplicates: true
+		};
+
+	switch (type) {
+		case 'success':
+			toastr.success(message);
+			break;
+		case 'error':
+			toastr.error(message);
+			break;
+		case 'info':
+			toastr.info(message);
+			break;
+		case 'warning':
+			toastr.warning(message);
+			break;
+		default:
+			console.warn('Unknown toast type:', type);
+	}
+}
