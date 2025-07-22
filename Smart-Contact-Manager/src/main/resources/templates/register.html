@@ -18,7 +18,7 @@
 				<div
 					class="w-full p-4 bg-white border border-gray-200 rounded-lg shadow-sm sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
 					<form class="space-y-6" th:action="@{'/do-register'}" method="post"
-						th:object="${userDTO}">
+						th:object="${userDTO}" novalidate>
 						<h3 class="text-xl font-medium text-gray-900 dark:text-white">Signup</h3>
 						<p class="text-sm font-medium text-gray-900 dark:text-white">Start
 							managing your contact</p>
@@ -30,6 +30,8 @@
 								th:field="*{name}" placeholder="Kruthik sp"
 								class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
 								required />
+							<p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+								class="text-red-900 px-1">Name is required.</p>
 						</div>
 						<div>
 							<label for="email"
@@ -38,6 +40,8 @@
 								th:field="*{email}" placeholder="Kruthiksp62@gmail.com"
 								class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
 								required />
+							<p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+								class="text-red-900 px-1">Email is required.</p>
 						</div>
 						<div>
 							<label for="phone"
@@ -47,6 +51,9 @@
 								placeholder="99XXXXXX11"
 								class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
 								required />
+							<p th:if="${#fields.hasErrors('phoneNumber')}"
+								th:errors="*{phoneNumber}" class="text-red-900 px-1">Phone number is
+								required.</p>
 						</div>
 
 						<div>
@@ -56,6 +63,9 @@
 								placeholder="••••••••" th:field="*{password}"
 								class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
 								required />
+							<p th:if="${#fields.hasErrors('password')}"
+								th:errors="*{password}" class="text-red-900 px-1">Password is
+								required.</p>
 						</div>
 
 						<div class="flex">
@@ -66,7 +76,6 @@
 								class="max-w-xs mx-auto block text-white bg-orange-700 hover:bg-orange-800 focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800">
 								Reset</button>
 						</div>
-
 					</form>
 				</div>
 			</div>
@@ -78,8 +87,10 @@
 		let toastMessage = /*[[${toastMessage}]]*/null;
 		let toastType = /*[[${toastType}]]*/null;
 
-		console.log("Toast message:", toastMessage);
-		console.log("Toast type:", toastType);
+		/*
+			-> The \/*[[...]]*\/ syntax is a special Thymeleaf inlined JavaScript expression.
+			-> It may look like a comment, but Thymeleaf parses and replaces it at server-side.
+		 */
 
 		if (toastMessage && toastType) {
 			showToast(toastMessage, toastType);
