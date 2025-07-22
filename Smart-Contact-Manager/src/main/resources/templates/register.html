@@ -1,10 +1,77 @@
 <!DOCTYPE html>
-<html>
+<html lang="en"
+	th:replace="~{base:: parent(~{::#container}, ~{::title}, ~{::script})}">
+
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Signup</title>
 </head>
+
 <body>
+	<div id="container"
+		class="min-h-screen grid place-items-center bg-gray-100 dark:bg-gray-900">
+		<div
+			class="grid grid-cols-12 w-full px-4 md:px-0 transform -translate-y-10">
+			<div
+				class="col-start-3 col-span-8 md:col-start-3 md:col-span-8 lg:col-start-5 lg:col-span-4">
+				<div
+					class="w-full p-4 bg-white border border-gray-200 rounded-lg shadow-sm sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
+					<form class="space-y-6" th:action="@{'/do-register'}" method="post"
+						th:object="${userForm}">
+						<h3 class="text-xl font-medium text-gray-900 dark:text-white">Signup</h3>
+						<p class="text-sm font-medium text-gray-900 dark:text-white">Start
+							managing your contact</p>
+
+						<div>
+							<label for="name"
+								class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your
+								name:</label> <input type="text" name="name" id="name"
+								th:field="*{name}" placeholder="Kruthik sp"
+								class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+								required />
+						</div>
+						<div>
+							<label for="email"
+								class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your
+								email:</label> <input type="email" name="email" id="email"
+								th:field="*{email}" placeholder="Kruthiksp62@gmail.com"
+								class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+								required />
+						</div>
+						<div>
+							<label for="phone"
+								class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your
+								phone number:</label> <input type="number" maxlength=10 name="phone"
+								th:field="*{phone}" id="phone" placeholder="99XXXXXX11"
+								class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+								required />
+						</div>
+
+						<div>
+							<label for="password"
+								class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your
+								password</label> <input type="password" name="password" id="password"
+								placeholder="••••••••" th:field="*{password}"
+								class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+								required />
+						</div>
+
+						<div class="flex">
+							<button type="submit"
+								class="max-w-xs mx-auto block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+								Register</button>
+							<button type="reset"
+								class="max-w-xs mx-auto block text-white bg-orange-700 hover:bg-orange-800 focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800">
+								Reset</button>
+						</div>
+
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
 
 </body>
+
 </html>

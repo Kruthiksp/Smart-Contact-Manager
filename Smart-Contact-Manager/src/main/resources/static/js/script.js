@@ -9,6 +9,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
 		//setting listner
 		const changeThemeBtn = document.getElementById("theme-change-buttom");
+		const test = changeThemeBtn.querySelector("span").textContent = currentTheme == "light" ? "Dark" : "Light";
+
 		changeThemeBtn.addEventListener("click", (event) => {
 
 			const oldTheme = currentTheme;
@@ -19,8 +21,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
 			document.querySelector('html').classList.remove(oldTheme);
 			document.querySelector('html').classList.add(currentTheme);
-			const test = changeThemeBtn.querySelector("span").textContent = currentTheme == "light" ? "Dark" : "Light";
 
+			const test = changeThemeBtn.querySelector("span").textContent = currentTheme == "light" ? "Dark" : "Light";
 		})
 	}
 
