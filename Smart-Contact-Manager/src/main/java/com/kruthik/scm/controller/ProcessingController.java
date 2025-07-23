@@ -27,10 +27,7 @@ public class ProcessingController {
 			return "register";
 		}
 
-		User user = User.builder().name(userDTO.getName()).email(userDTO.getEmail())
-				.phoneNumber(userDTO.getPhoneNumber()).password(userDTO.getPassword()).build();
-
-		User saveUser = userService.saveUser(user);
+		User saveUser = userService.saveUser(userDTO);
 
 		if (saveUser != null) {
 			redirectAttributes.addFlashAttribute("toastMessage", "Registration Successful!");

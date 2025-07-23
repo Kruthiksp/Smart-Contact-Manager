@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Signup</title>
+<title>Login</title>
 </head>
 
 <body>
@@ -17,7 +17,7 @@
 				class="col-span-12 md:col-start-3 md:col-span-8 lg:col-start-4 lg:col-span-6">
 				<div
 					class="w-full p-4 bg-white border border-gray-200 rounded-lg shadow-sm sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
-					<form class="space-y-6" action="#">
+					<form class="space-y-6" th:action="@{/login}" method="post">
 						<h3 class="text-xl font-medium text-gray-900 dark:text-white">Login</h3>
 						<p class="text-sm font-medium text-gray-900 dark:text-white">Start
 							storing your contact</p>
@@ -26,7 +26,7 @@
 							<label for="email"
 								class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your
 								email</label> <input type="email" name="email" id="email"
-								placeholder="name@company.com"
+								placeholder="Enter your mail ID."
 								class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
 								required />
 						</div>
@@ -35,7 +35,7 @@
 							<label for="password"
 								class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your
 								password</label> <input type="password" name="password" id="password"
-								placeholder="••••••••"
+								placeholder="Enter your password."
 								class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
 								required />
 						</div>
@@ -43,8 +43,7 @@
 						<div class="flex items-start">
 							<div class="flex items-center h-5">
 								<input id="remember" type="checkbox"
-									class="w-4 h-4 border border-gray-300 rounded-sm bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800"
-									required />
+									class="w-4 h-4 border border-gray-300 rounded-sm bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 dark:checked:bg-blue-600 dark:checked:border-blue-600 dark:focus:ring-blue-600" />
 							</div>
 							<label for="remember"
 								class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Remember
@@ -68,7 +67,14 @@
 			</div>
 		</div>
 	</div>
+	<script th:inline="javascript">
+		const error = /*[[${param.error}]]*/null;
 
+		if (error) {
+			showToast("Invalid username or password", "error");
+		}
+	</script>
 </body>
 
 </html>
+

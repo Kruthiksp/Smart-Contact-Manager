@@ -11,26 +11,22 @@ public class PageController {
 
 	@GetMapping("/home")
 	public String home() {
-
 		return "home";
 	}
 
 	@GetMapping("/about")
 	public String about() {
-		System.out.println("About Page Handller");
-		return "about.html";
+		return "about";
 	}
 
 	@GetMapping("/services")
 	public String services() {
-		System.out.println("Services Page Handller");
-		return "services.html";
+		return "services";
 	}
 
 	@GetMapping("/contact")
 	public String contact() {
-		System.out.println("Contact Page Handller");
-		return "contact.html";
+		return "contact";
 	}
 
 	@GetMapping("/signup")
@@ -39,13 +35,12 @@ public class PageController {
 		UserDTO userDTO = new UserDTO();
 		model.addAttribute("userDTO", userDTO);
 
-		return "register.html";
+		return "register";
 	}
 
 	@GetMapping("/login")
 	public String login() {
-		System.out.println("Login Page Handller");
-		return "login.html";
+		return "login";
 	}
 
 }
