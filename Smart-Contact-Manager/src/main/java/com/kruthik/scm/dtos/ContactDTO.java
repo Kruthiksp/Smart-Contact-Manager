@@ -19,7 +19,7 @@ public class ContactDTO {
 	private String email;
 	private String phoneNumber;
 	private String profilePic;
-	private boolean favourite = false;
+	private boolean favourite;
 	private LocalDate dob;
 
 	private User user;

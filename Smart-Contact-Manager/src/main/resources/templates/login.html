@@ -64,8 +64,12 @@
 					</form>
 					<div id="social-login-container" class="mt-4">
 						<a th:href="@{'/oauth2/authorization/google'}"
-							class="login-with-google-btn">Login
-							with Google</a>
+							class="login-with-google-btn">Sign in with Google</a>
+
+						<button >
+							<a th:href="@{'/oauth2/authorization/github'}"
+								class="login-with-github-btn">Sign in with GitHub</a>
+						</button>
 					</div>
 				</div>
 			</div>
