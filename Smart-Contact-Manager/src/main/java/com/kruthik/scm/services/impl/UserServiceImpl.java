@@ -21,10 +21,17 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User saveUser(UserDTO userDTO) {
-		
-		User user = userMapper.dtoToEntity(userDTO);
-		user.setPassword(passwordEncoder.encode(user.getPassword()));
-		
+
+		User user = null;
+
+		if (!userRepository.existsByEmail(userDTO.getEmail())) {
+			user = userMapper.dtoToEntity(userDTO);
+
+			if (userDTO.getPassword() != null) {
+				user.setPassword(passwordEncoder.encode(user.getPassword()));
+			}
+		}
+
 		return userRepository.save(user);
 	}
 }

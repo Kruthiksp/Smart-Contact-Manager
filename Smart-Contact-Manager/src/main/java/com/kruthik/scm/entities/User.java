@@ -28,14 +28,14 @@ public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer Id;
+	private Integer id;
 	@Column(name = "username", nullable = false)
 	private String name;
 	@Column(unique = true, nullable = false)
 	private String email;
-	@Column(unique = true, nullable = false, length = 10)
+	@Column(unique = true, nullable = true, length = 10)
 	private String phoneNumber;
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private String password;
 	@Column(length = 2000)
 	private String profilePic;

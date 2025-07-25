@@ -9,6 +9,11 @@ import com.kruthik.scm.dtos.UserDTO;
 @Controller
 public class PageController {
 
+	@GetMapping("/")
+	public String index() {
+		return "redirect:/home";
+	}
+	
 	@GetMapping("/home")
 	public String home() {
 		return "home";

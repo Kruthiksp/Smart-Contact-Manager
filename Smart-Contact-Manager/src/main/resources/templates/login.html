@@ -19,7 +19,7 @@
 					class="w-full p-4 bg-white border border-gray-200 rounded-lg shadow-sm sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
 					<form class="space-y-6" th:action="@{/login}" method="post">
 						<h3 class="text-xl font-medium text-gray-900 dark:text-white">Login</h3>
-						<p class="text-sm font-medium text-gray-900 dark:text-white">Start
+						<p class="text-sm font-medium text-gray-900 dark:text-white -mt-4">Start
 							storing your contact</p>
 
 						<div>
@@ -53,25 +53,34 @@
 						</div>
 
 						<button type="submit"
-							class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Login
-							to your account</button>
+							class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Login</button>
 
 						<div
 							class="text-center text-sm font-medium text-gray-500 dark:text-gray-300">
-							Don't have an account? <a href="#"
+							Don't have an account? <a th:href="${'/signup'}"
 								class="text-blue-700 hover:underline dark:text-blue-500">Create
 								one</a>
 						</div>
 					</form>
+					<div id="social-login-container" class="mt-4">
+						<a th:href="@{'/oauth2/authorization/google'}"
+							class="login-with-google-btn">Login
+							with Google</a>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 	<script th:inline="javascript">
 		const error = /*[[${param.error}]]*/null;
+		const logout = /*[[${param.logout}]]*/null;
 
 		if (error) {
 			showToast("Invalid username or password", "error");
+		}
+
+		if (logout) {
+			showToast("You have been logged out.", "success");
 		}
 	</script>
 </body>

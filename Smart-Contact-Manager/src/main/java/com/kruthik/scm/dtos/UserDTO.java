@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class UserDTO {
 
-	private Integer Id;
+	private Integer id;
 
 	@NotBlank(message = "Name is required.")
 	@Size(min = 3, message = "Mininum 3 characters required.")

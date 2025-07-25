@@ -9,12 +9,10 @@ import com.kruthik.scm.entities.User;
 @Mapper(componentModel = "spring")
 public interface UserMapper {
 
-	@Mapping(target = "Id", ignore = true)
-	@Mapping(target = "contacts", ignore = true)
+	@Mapping(target = "id", ignore = true)
 	UserDTO entityToDto(User user);
 
-	@Mapping(target = "Id", ignore = true)
-	@Mapping(target = "contacts", ignore = true)
+	@Mapping(target = "id", ignore = true)
 	User dtoToEntity(UserDTO userDTO);
 
 }
