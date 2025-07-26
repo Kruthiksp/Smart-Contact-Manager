@@ -22,16 +22,19 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User saveUser(UserDTO userDTO) {
 
-		User user = null;
-
 		if (!userRepository.existsByEmail(userDTO.getEmail())) {
-			user = userMapper.dtoToEntity(userDTO);
+			User user = userMapper.dtoToEntity(userDTO);
 
 			if (userDTO.getPassword() != null) {
 				user.setPassword(passwordEncoder.encode(user.getPassword()));
+				return userRepository.save(user);
 			}
 		}
+		return null;
+	}
 
-		return userRepository.save(user);
+	@Override
+	public User findUserByEmail(String email) {
+		return userRepository.findByEmail(email).orElse(null);
 	}
 }

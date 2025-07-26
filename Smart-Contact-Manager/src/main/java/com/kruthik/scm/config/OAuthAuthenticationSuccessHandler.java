@@ -1,11 +1,11 @@
 package com.kruthik.scm.config;
 
 import java.io.IOException;
-import java.util.Map;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
@@ -37,7 +37,7 @@ public class OAuthAuthenticationSuccessHandler implements AuthenticationSuccessH
 
 		if (authorizedClientRegistrationId.equals(SocialLoginConstants.GOOGLE)) {
 
-			DefaultOAuth2User googleUser = (DefaultOAuth2User) oAuth2AuthenticationToken.getPrincipal();
+			OAuth2User googleUser = oAuth2AuthenticationToken.getPrincipal();
 
 			UserDTO userDTO = UserDTO.builder().name(googleUser.getAttribute("name"))
 					.email(googleUser.getAttribute("email")).profilePic(googleUser.getAttribute("picture"))
@@ -48,7 +48,7 @@ public class OAuthAuthenticationSuccessHandler implements AuthenticationSuccessH
 
 		} else if (authorizedClientRegistrationId.equals(SocialLoginConstants.GITHUB)) {
 
-			DefaultOAuth2User gitHubUser = (DefaultOAuth2User) oAuth2AuthenticationToken.getPrincipal();
+			OAuth2User gitHubUser = oAuth2AuthenticationToken.getPrincipal();
 
 			UserDTO userDTO = UserDTO.builder().name(gitHubUser.getAttribute("login"))
 					.profilePic(gitHubUser.getAttribute("avatar_url")).emailVerified(true).provider(Providers.GITHUB)
