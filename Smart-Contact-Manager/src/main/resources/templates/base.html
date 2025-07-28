@@ -27,9 +27,17 @@
 </head>
 
 <body class="dark:bg-gray-900 dark:text-white bg-white text-black">
-	<div th:replace="~{navbar :: navbar}"></div>
-	<div th:replace="${content}"></div>
 
+	<!-- navbar when the user is logged in -->
+	<div th:if="${loggedInUser}">
+		<div th:replace="~{user/user-navbar :: user-navbar}"></div>
+	</div>
+	<!-- navbar when the user is logged out -->
+	<div th:unless="${loggedInUser}">
+		<div th:replace="~{navbar :: navbar}"></div>
+	</div>
+
+	<div th:replace="${content}"></div>
 
 	<!-- FlowBite CDN -->
 	<script
@@ -48,7 +56,7 @@
 	<script th:src="@{/js/script.js}"></script>
 
 	<!-- script coming from caller -->
-	<script th:replace="${script}"></script>
+	<script th:replace="${script}?:~{}"></script>
 
 </body>
 
