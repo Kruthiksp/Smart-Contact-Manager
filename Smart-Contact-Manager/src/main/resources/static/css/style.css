@@ -6,7 +6,7 @@
   border-radius: 3px;
   box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 1px 1px rgba(0, 0, 0, .25);
   
-  color: #757575;
+  color: rgb(100, 100, 100);
   font-size: 14px;
   font-weight: 500;
   font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans","Helvetica Neue",sans-serif;
@@ -18,7 +18,7 @@
   
   &:hover {
     box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 2px 4px rgba(0, 0, 0, .25);
-    background-color: #D3D3D3;
+    /* background-color: #D3D3D3; */
   }
   
   &:active {

@@ -41,15 +41,17 @@
 					class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
 					<a th:href="@{'/user/profile'}">Profile</a>
 				</button> -->
-				<a th:href="@{/user/profile}"
-					class="flex items-center space-x-2 text-black dark:text-white font-medium rounded-lg text-sm px-4 py-2
+				<button type="button">
+					<a th:href="@{/user/profile}"
+						class="flex items-center space-x-2 text-black dark:text-white font-medium rounded-lg text-sm px-4 py-2
 					bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 hover:dark:bg-gray-800">
-					<!-- bg-blue-700 hover:bg-blue-800 --> <!-- dark:bg-blue-600 dark:hover:bg-blue-700 -->
-					<span th:text="${loggedInUser.name}">Username</span> <img
-					th:src="${loggedInUser.profilePic != null && !#strings.isEmpty(loggedInUser.profilePic) ? loggedInUser.profilePic : '../images/default-profile-pic.jpg'}"
-					alt="Profile"
-					class="w-8 h-8 rounded-full object-cover border border-white shadow-md" />
-				</a>
+						<!-- bg-blue-700 hover:bg-blue-800 --> <!-- dark:bg-blue-600 dark:hover:bg-blue-700 -->
+						<span th:text="${loggedInUser.name}">Username</span> <img
+						th:src="${loggedInUser.profilePic != null && !#strings.isEmpty(loggedInUser.profilePic) ? loggedInUser.profilePic : '../images/default-profile-pic.jpg'}"
+						alt="Profile"
+						class="w-8 h-8 rounded-full object-cover border border-white shadow-md" />
+					</a>
+				</button>
 
 
 				<button data-collapse-toggle="navbar-cta" type="button"

@@ -13,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserController {
 
-
 	@GetMapping("/dashboard")
 	public String userDashboard() {
 		return "user/dashboard";
@@ -21,13 +20,12 @@ public class UserController {
 
 	@GetMapping("/profile")
 	public String userProfile(Model model, Authentication authentication) {
-
 		return "user/profile";
 	}
 
-	@GetMapping("/contacts")
-	public String userContacts() {
-		return "user/contacts";
+	@GetMapping("/add-contact")
+	public String addContact() {
+		return "user/contact/addContact";
 	}
 
 	@GetMapping("/update-contact")

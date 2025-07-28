@@ -39,4 +39,13 @@ public class ProcessingController {
 
 		return "redirect:/signup";
 	}
+
+	@PostMapping("/add-contact")
+	public String addContact() {
+
+		System.out.println("contact add?");
+
+		return "redirect:/user/add-contact";
+	}
+
 }

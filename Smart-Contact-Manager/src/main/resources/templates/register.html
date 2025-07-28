@@ -19,7 +19,7 @@
 					class="w-full p-4 bg-white border border-gray-200 rounded-lg shadow-sm sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
 					<form class="space-y-6" th:action="@{'/do-register'}" method="post"
 						th:object="${userDTO}" novalidate>
-						<h3 class="text-xl font-medium text-gray-900 dark:text-white">Signup</h3>
+						<h3 class="text-3xl font-bold text-gray-900 dark:text-white">Signup</h3>
 						<p class="text-sm font-medium text-gray-900 dark:text-white">Start
 							managing your contact</p>
 
@@ -52,8 +52,8 @@
 								class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
 								required />
 							<p th:if="${#fields.hasErrors('phoneNumber')}"
-								th:errors="*{phoneNumber}" class="text-red-900 px-1">Phone number is
-								required.</p>
+								th:errors="*{phoneNumber}" class="text-red-900 px-1">Phone
+								number is required.</p>
 						</div>
 
 						<div>
@@ -64,8 +64,8 @@
 								class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
 								required />
 							<p th:if="${#fields.hasErrors('password')}"
-								th:errors="*{password}" class="text-red-900 px-1">Password is
-								required.</p>
+								th:errors="*{password}" class="text-red-900 px-1">Password
+								is required.</p>
 						</div>
 
 						<div class="flex">

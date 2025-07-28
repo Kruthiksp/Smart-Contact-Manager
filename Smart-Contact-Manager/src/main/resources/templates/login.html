@@ -18,7 +18,7 @@
 				<div
 					class="w-full p-4 bg-white border border-gray-200 rounded-lg shadow-sm sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
 					<form class="space-y-6" th:action="@{/login}" method="post">
-						<h3 class="text-xl font-medium text-gray-900 dark:text-white">Login</h3>
+						<h3 class="text-3xl font-bold text-gray-900 dark:text-white">Login</h3>
 						<p class="text-sm font-medium text-gray-900 dark:text-white -mt-4">Start
 							storing your contact</p>
 
@@ -64,12 +64,10 @@
 					</form>
 					<div id="social-login-container" class="mt-4">
 						<a th:href="@{'/oauth2/authorization/google'}"
-							class="login-with-google-btn">Sign in with Google</a>
-
-						<button >
-							<a th:href="@{'/oauth2/authorization/github'}"
-								class="login-with-github-btn">Sign in with GitHub</a>
-						</button>
+							class="login-with-google-btn">Sign in with Google</a> 
+							<a
+							th:href="@{'/oauth2/authorization/github'}"
+							class="login-with-github-btn">Sign in with GitHub</a>
 					</div>
 				</div>
 			</div>

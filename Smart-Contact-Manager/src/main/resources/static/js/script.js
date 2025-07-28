@@ -42,15 +42,15 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
 function showToast(message, type) {
 	if (!message || !type) return;
-	
+
 	toastr.options = {
-			positionClass: 'toast-bottom-left',
-			timeOut: 5000,
-			closeButton: true,
-			progressBar: true,
-			newestOnTop: true,
-			preventDuplicates: true
-		};
+		positionClass: 'toast-bottom-left',
+		timeOut: 5000,
+		closeButton: true,
+		progressBar: true,
+		newestOnTop: true,
+		preventDuplicates: true
+	};
 
 	switch (type) {
 		case 'success':
