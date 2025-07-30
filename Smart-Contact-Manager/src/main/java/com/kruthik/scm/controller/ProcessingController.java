@@ -1,13 +1,17 @@
 package com.kruthik.scm.controller;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kruthik.scm.dtos.ContactDTO;
 import com.kruthik.scm.dtos.UserDTO;
+import com.kruthik.scm.entities.Contact;
 import com.kruthik.scm.entities.User;
+import com.kruthik.scm.services.ContactService;
 import com.kruthik.scm.services.UserService;
 
 import jakarta.validation.Valid;
@@ -18,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 public class ProcessingController {
 
 	private final UserService userService;
+	private final ContactService contactService;
 
 	@PostMapping("/do-register")
 	public String registration(@Valid @ModelAttribute UserDTO userDTO, BindingResult bindingResult,
@@ -40,10 +45,32 @@ public class ProcessingController {
 		return "redirect:/signup";
 	}
 
-	@PostMapping("/add-contact")
-	public String addContact() {
+	@PostMapping("/user/add-contact")
+	public String addContact(@Valid @ModelAttribute ContactDTO contactDTO, BindingResult bindingResult,
+			RedirectAttributes redirectAttributes, Authentication authentication) {
 
-		System.out.println("contact add?");
+		/* To check if the form has validation errors */
+		if (bindingResult.hasErrors()) {
+			return "user/contact/addContact";
+		}
+
+		/* To fetch the current logged in user */
+		String email = authentication.getName();
+		User userByEmail = userService.findUserByEmail(email);
+
+		/* To Set the current logged in user to contact */
+		contactDTO.setUser(userByEmail);
+
+		/* To Save the contact in the DB */
+		Contact contact = contactService.addContact(contactDTO,email);
+
+		if (contact != null) {
+			redirectAttributes.addFlashAttribute("toastMessage", "Contact Saved Successfully!");
+			redirectAttributes.addFlashAttribute("toastType", "success");
+		} else {
+			redirectAttributes.addFlashAttribute("toastMessage", "Failed to Save Contact!");
+			redirectAttributes.addFlashAttribute("toastType", "error");
+		}
 
 		return "redirect:/user/add-contact";
 	}

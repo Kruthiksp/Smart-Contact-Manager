@@ -12,9 +12,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Data
+@ToString(exclude = "user")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -25,6 +27,7 @@ public class Contact {
 	private Integer id;
 	@Column(nullable = false)
 	private String name;
+	@Column(nullable = false)
 	private String email;
 	@Column(nullable = false, length = 10)
 	private String phoneNumber;

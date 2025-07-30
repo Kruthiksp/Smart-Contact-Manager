@@ -6,6 +6,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.kruthik.scm.dtos.ContactDTO;
+
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -24,7 +26,9 @@ public class UserController {
 	}
 
 	@GetMapping("/add-contact")
-	public String addContact() {
+	public String addContact(Model model) {
+		ContactDTO contactDto = new ContactDTO();
+		model.addAttribute("contactDTO", contactDto);
 		return "user/contact/addContact";
 	}
 

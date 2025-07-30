@@ -9,7 +9,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
 		//setting listner
 		const changeThemeBtn = document.getElementById("theme-change-buttom");
-		const test = changeThemeBtn.querySelector("span").textContent = currentTheme == "light" ? "Dark" : "Light";
+
+		changeThemeBtn.querySelector("span").textContent = currentTheme == "light" ? "Dark" : "Light";
 
 		changeThemeBtn.addEventListener("click", (event) => {
 
@@ -22,7 +23,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
 			document.querySelector('html').classList.remove(oldTheme);
 			document.querySelector('html').classList.add(currentTheme);
 
-			const test = changeThemeBtn.querySelector("span").textContent = currentTheme == "light" ? "Dark" : "Light";
+			changeThemeBtn.querySelector("span").textContent = currentTheme == "light" ? "Dark" : "Light";
 		})
 	}
 
@@ -68,4 +69,24 @@ function showToast(message, type) {
 		default:
 			console.warn('Unknown toast type:', type);
 	}
+
 }
+
+function imagePreview() {
+
+	console.log("accessable")
+
+	document.getElementById("file_input").addEventListener("change", function(event) {
+		let file = event.target.files[0];
+		let reader = new FileReader();
+
+		reader.onload = function() {
+			document.getElementById("preview_image").src = reader.result;
+		};
+
+		reader.readAsDataURL(file)
+
+	})
+}
+
+
