@@ -1,10 +1,16 @@
 package com.kruthik.scm.services.impl;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.kruthik.scm.dtos.ContactDTO;
 import com.kruthik.scm.entities.Contact;
+import com.kruthik.scm.entities.User;
 import com.kruthik.scm.repositories.ContactRepository;
+import com.kruthik.scm.repositories.UserRepository;
 import com.kruthik.scm.services.ContactService;
 import com.kruthik.scm.services.ImageService;
 import com.kruthik.scm.util.ContactMapper;
@@ -18,17 +24,39 @@ public class ContactServiceImpl implements ContactService {
 	private final ContactMapper contactMapper;
 	private final ContactRepository contactRepository;
 	private final ImageService imageService;
+	private final UserRepository userRepository;
 
 	@Override
 	public Contact addContact(ContactDTO contactDTO, String userEmail) {
 
-		String uploadImageUrl = imageService.uploadImage(userEmail, contactDTO.getName(), contactDTO.getProfilePic());
+		String uploadImageUrl = null;
+
+		if (contactDTO.getProfilePic() != null) {
+			uploadImageUrl = imageService.uploadImage(userEmail, contactDTO.getName(), contactDTO.getProfilePic());
+		}
 
 		Contact dtoToEntity = contactMapper.dtoToEntity(contactDTO);
-		
+
 		dtoToEntity.setProfilePic(uploadImageUrl);
 
 		return contactRepository.save(dtoToEntity);
+	}
+
+	@Override
+	public Page<Contact> getAllContactsByUserId(String email, int pageNumber, int pageSize) {
+
+		User userByEmail = null;
+		Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by(Sort.Direction.ASC, "name"));
+
+		if (userRepository.existsByEmail(email)) {
+			userByEmail = userRepository.findByEmail(email).orElse(null);
+		}
+		return contactRepository.findByUser(userByEmail, pageable);
+	}
+
+	@Override
+	public void deleteContact(int contactId) {
+		contactRepository.deleteById(contactId);
 	}
 
 }

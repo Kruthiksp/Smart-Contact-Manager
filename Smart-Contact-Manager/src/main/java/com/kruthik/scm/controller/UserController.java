@@ -1,12 +1,18 @@
 package com.kruthik.scm.controller;
 
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kruthik.scm.dtos.ContactDTO;
+import com.kruthik.scm.entities.Contact;
+import com.kruthik.scm.services.ContactService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -14,6 +20,8 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/user")
 @RequiredArgsConstructor
 public class UserController {
+
+	private final ContactService contactService;
 
 	@GetMapping("/dashboard")
 	public String userDashboard() {
@@ -32,19 +40,40 @@ public class UserController {
 		return "user/contact/addContact";
 	}
 
+	@GetMapping("/view-contacts")
+	public String viewContacts(@RequestParam(value = "pageNumber", defaultValue = "0") int pageNumber,
+			@RequestParam(value = "pageSize", defaultValue = "10") int pageSize, Model model,
+			Authentication authentication) {
+
+		/* Fetching the current logged in user's email id */
+		String email = authentication.getName();
+
+		/* Fetching All the Contacts */
+		Page<Contact> allContactsByUserId = contactService.getAllContactsByUserId(email, pageNumber, pageSize);
+
+		/* Setting Contacts to model */
+//		model.addAttribute("contacts", allContactsByUserId);
+		model.addAttribute("contacts", allContactsByUserId.getContent()); // actual list of contacts
+		model.addAttribute("currentPage", pageNumber);
+		model.addAttribute("pageSize", pageSize);
+		model.addAttribute("totalPages", allContactsByUserId.getTotalPages());
+
+		return "user/contact/viewContacts";
+	}
+
 	@GetMapping("/update-contact")
 	public String updateContact() {
 		return "";
 	}
 
-	@GetMapping("/delete-contact")
-	public String deleteContact() {
-		return "";
-	}
+	@GetMapping("/delete-contact/{contactId}")
+	public String deleteContact(@PathVariable int contactId, RedirectAttributes redirectAttributes) {
 
-	@GetMapping("/delete-account")
-	public String deleteAccount() {
-		return "";
+		contactService.deleteContact(contactId);
+		redirectAttributes.addFlashAttribute("toastMessage", "Contact Deleted Successfully!");
+		redirectAttributes.addFlashAttribute("toastType", "success");
+
+		return "redirect:/user/view-contacts";
 	}
 
 }
