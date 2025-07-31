@@ -11,6 +11,8 @@ public interface ContactService {
 
 	Page<Contact> getAllContactsByUserId(String email, int pageNumber, int pageSize);
 
+	Page<Contact> getAllContactsByUserId(String email, String keyword, int pageNumber, int pageSize);
+
 	void deleteContact(int contactId);
 
 }

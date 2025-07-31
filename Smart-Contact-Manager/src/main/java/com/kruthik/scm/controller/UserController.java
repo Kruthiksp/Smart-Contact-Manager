@@ -42,17 +42,23 @@ public class UserController {
 
 	@GetMapping("/view-contacts")
 	public String viewContacts(@RequestParam(value = "pageNumber", defaultValue = "0") int pageNumber,
-			@RequestParam(value = "pageSize", defaultValue = "10") int pageSize, Model model,
-			Authentication authentication) {
+			@RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
+			@RequestParam(required = false) String keyword, Model model, Authentication authentication) {
 
 		/* Fetching the current logged in user's email id */
 		String email = authentication.getName();
 
 		/* Fetching All the Contacts */
-		Page<Contact> allContactsByUserId = contactService.getAllContactsByUserId(email, pageNumber, pageSize);
+		Page<Contact> allContactsByUserId;// = contactService.getAllContactsByUserId(email, pageNumber, pageSize);
+
+		if (keyword != null && !keyword.isEmpty()) {
+			allContactsByUserId = contactService.getAllContactsByUserId(email, keyword,pageNumber, pageSize);
+			model.addAttribute("keyword", keyword);
+		} else {
+			allContactsByUserId = contactService.getAllContactsByUserId(email, pageNumber, pageSize);
+		}
 
 		/* Setting Contacts to model */
-//		model.addAttribute("contacts", allContactsByUserId);
 		model.addAttribute("contacts", allContactsByUserId.getContent()); // actual list of contacts
 		model.addAttribute("currentPage", pageNumber);
 		model.addAttribute("pageSize", pageSize);

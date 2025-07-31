@@ -59,4 +59,15 @@ public class ContactServiceImpl implements ContactService {
 		contactRepository.deleteById(contactId);
 	}
 
+	@Override
+	public Page<Contact> getAllContactsByUserId(String email, String keyword, int pageNumber, int pageSize) {
+		User userByEmail = null;
+		Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by(Sort.Direction.ASC, "name"));
+
+		if (userRepository.existsByEmail(email)) {
+			userByEmail = userRepository.findByEmail(email).orElse(null);
+		}
+		return contactRepository.findByUserAndNameContainingIgnoreCase(userByEmail, keyword, pageable);
+	}
+
 }
