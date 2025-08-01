@@ -3,7 +3,7 @@
 	th:replace="~{base :: parent(~{:: #container}, ~{:: title}, ~{:: script})}">
 <head>
 <meta charset="UTF-8">
-<title th:text="${loggedInUser.name + ' contacts'}">Contact List</title>
+<title>View Contacts</title>
 </head>
 <body>
 	<div id="container" class="sm:pl-64">
@@ -99,11 +99,12 @@
 							class="fa-solid fa-star" th:if="${contact.favourite}"></i></td>
 						<td class="px-6 py-4">
 							<div class="flex justify-center items-center space-x-4">
-								<a th:href="@{/}"><i class="fa-solid fa-pencil"></i></a> <a
+								<a th:href="@{/user/update-contact/{id}(id=${contact.id})}"><i class="fa-solid fa-pencil"></i></a> <a
+									onclick="return confirm('Are you sure you want to delete this contact?');"
 									th:href="@{/user/delete-contact/{id}(id=${contact.id})}"><i
-									class="fa-solid fa-trash"></i></a>
-								<!-- "@{/contact/edit/{id}(id=${contact.id})}"  -->
-								<a th:href="@{/}"><i class="fa-solid fa-eye"></i></a>
+									class="fa-solid fa-trash"></i></a> <a
+									th:href="@{/user/view-contact/{id}(id=${contact.id})}"><i
+									class="fa-solid fa-eye"></i></a>
 							</div>
 						</td>
 					</tr>
@@ -149,13 +150,10 @@
 	   dark:hover:bg-gray-700 dark:hover:text-white">
 								Next </a></li>
 
-
 					</ul>
 				</nav>
 			</div>
-
 		</div>
-
 	</div>
 
 	<script th:inline="javascript">

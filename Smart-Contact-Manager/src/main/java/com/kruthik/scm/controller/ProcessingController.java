@@ -51,7 +51,7 @@ public class ProcessingController {
 
 		/* To check if the form has validation errors */
 		if (bindingResult.hasErrors()) {
-			return "user/contact/addContact";
+			return "user/addContact";
 		}
 
 		/* To fetch the current logged in user */
@@ -62,7 +62,7 @@ public class ProcessingController {
 		contactDTO.setUser(userByEmail);
 
 		/* To Save the contact in the DB */
-		Contact contact = contactService.addContact(contactDTO,email);
+		Contact contact = contactService.addContact(contactDTO, email);
 
 		if (contact != null) {
 			redirectAttributes.addFlashAttribute("toastMessage", "Contact Saved Successfully!");
@@ -73,6 +73,36 @@ public class ProcessingController {
 		}
 
 		return "redirect:/user/add-contact";
+	}
+
+	@PostMapping("/user/update-contact")
+	public String updateContact(@Valid @ModelAttribute ContactDTO contactDTO, BindingResult bindingResult,
+			RedirectAttributes redirectAttributes, Authentication authentication) {
+
+		/* To check if the form has validation errors */
+		if (bindingResult.hasErrors()) {
+			return "user/updateContact";
+		}
+
+		/* To fetch the current logged in user */
+		String email = authentication.getName();
+		User userByEmail = userService.findUserByEmail(email);
+
+		/* To Set the current logged in user to contact */
+		contactDTO.setUser(userByEmail);
+
+		/* To Save the contact in the DB */
+		int updatedRows = contactService.updateContact(contactDTO, email);
+
+		if (updatedRows > 0) {
+			redirectAttributes.addFlashAttribute("toastMessage", "Contact Updated Successfully!");
+			redirectAttributes.addFlashAttribute("toastType", "success");
+		} else {
+			redirectAttributes.addFlashAttribute("toastMessage", "Failed to Update Contact!");
+			redirectAttributes.addFlashAttribute("toastType", "error");
+		}
+
+		return "redirect:/user/view-contacts";
 	}
 
 }

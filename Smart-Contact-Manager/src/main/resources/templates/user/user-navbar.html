@@ -15,10 +15,9 @@
 						d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
    </svg>
 			</button>
-
 			<a th:href="@{'/'}"
 				class="flex items-center space-x-3 rtl:space-x-reverse"> <img
-				th:src="@{../images/telephone.png}" class="h-8" alt="SCM Logo" /> <span
+				th:src="@{/images/telephone.png}" class="h-8" alt="SCM Logo" /> <span
 				class="self-center text-2xl font-semibold whitespace-nowrap text-black dark:text-white">SCM</span>
 			</a>
 			<div
@@ -32,22 +31,13 @@
 					<i class="fa-solid fa-circle-half-stroke"></i> <span>Light</span>
 				</button>
 
-				<!-- <button type="button"
-					class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
-					<a th:href="@{'/logout'}">Logout</a>
-				</button> -->
-
-				<!-- <button type="button"
-					class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-					<a th:href="@{'/user/profile'}">Profile</a>
-				</button> -->
 				<button type="button">
 					<a th:href="@{/user/profile}"
 						class="flex items-center space-x-2 text-black dark:text-white font-medium rounded-lg text-sm px-4 py-2
 					bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 hover:dark:bg-gray-800">
 						<!-- bg-blue-700 hover:bg-blue-800 --> <!-- dark:bg-blue-600 dark:hover:bg-blue-700 -->
 						<span th:text="${loggedInUser.name}">Username</span> <img
-						th:src="${loggedInUser.profilePic != null && !#strings.isEmpty(loggedInUser.profilePic) ? loggedInUser.profilePic : '../images/default-profile-pic.jpg'}"
+						th:src="${loggedInUser.profilePic != null && !#strings.isEmpty(loggedInUser.profilePic) ? loggedInUser.profilePic : '/images/default-profile-pic.jpg'}"
 						alt="Profile"
 						class="w-8 h-8 rounded-full object-cover border border-white shadow-md" />
 					</a>

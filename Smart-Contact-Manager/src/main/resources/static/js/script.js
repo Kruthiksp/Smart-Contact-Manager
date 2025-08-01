@@ -72,6 +72,8 @@ function showToast(message, type) {
 
 }
 
+/*--------------------------------------------------------------------------------------------------------------------------------*/
+// Image Preview in add contact form
 function imagePreview() {
 
 	console.log("accessable")

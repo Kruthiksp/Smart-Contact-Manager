@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kruthik.scm.dtos.ContactDTO;
+import com.kruthik.scm.dtos.ContactDTO_ForRetrieving;
 import com.kruthik.scm.entities.Contact;
 import com.kruthik.scm.services.ContactService;
 
@@ -37,7 +38,19 @@ public class UserController {
 	public String addContact(Model model) {
 		ContactDTO contactDto = new ContactDTO();
 		model.addAttribute("contactDTO", contactDto);
-		return "user/contact/addContact";
+		return "user/addContact";
+	}
+
+	@GetMapping("/view-contact/{contactId}")
+	public String viewContactModal(@PathVariable int contactId, Model model) {
+
+		ContactDTO_ForRetrieving contact = contactService.findContact(contactId);
+
+		if (contact != null) {
+			model.addAttribute("contact", contact);
+		}
+
+		return "user/contactModel";
 	}
 
 	@GetMapping("/view-contacts")
@@ -52,7 +65,7 @@ public class UserController {
 		Page<Contact> allContactsByUserId;// = contactService.getAllContactsByUserId(email, pageNumber, pageSize);
 
 		if (keyword != null && !keyword.isEmpty()) {
-			allContactsByUserId = contactService.getAllContactsByUserId(email, keyword,pageNumber, pageSize);
+			allContactsByUserId = contactService.getAllContactsByUserId(email, keyword, pageNumber, pageSize);
 			model.addAttribute("keyword", keyword);
 		} else {
 			allContactsByUserId = contactService.getAllContactsByUserId(email, pageNumber, pageSize);
@@ -64,12 +77,17 @@ public class UserController {
 		model.addAttribute("pageSize", pageSize);
 		model.addAttribute("totalPages", allContactsByUserId.getTotalPages());
 
-		return "user/contact/viewContacts";
+		return "user/viewContacts";
 	}
 
-	@GetMapping("/update-contact")
-	public String updateContact() {
-		return "";
+	@GetMapping("/update-contact/{contactId}")
+	public String updateContact(@PathVariable int contactId, Model model) {
+
+		ContactDTO_ForRetrieving contact = contactService.findContact(contactId);
+
+		model.addAttribute("contactDTO", contact);
+
+		return "/user/updateContact";
 	}
 
 	@GetMapping("/delete-contact/{contactId}")

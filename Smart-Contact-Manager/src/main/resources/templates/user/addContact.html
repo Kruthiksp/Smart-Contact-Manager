@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html
+	th:replace="~{base :: parent(~{:: #container}, ~{:: title}, ~{:: script})}">
+<head>
+<meta charset="UTF-8">
+<title>Add Contact</title>
+</head>
+<body>
+	<div id="container" class="sm:pl-64">
+
+		<div th:if="${loggedInUser}">
+
+			<!-- sidebar if the user is logged in -->
+			<div th:replace="~{user/sidebar :: sidebar}"></div>
+
+			<!-- Form -->
+			<div
+				class="grid grid-cols-12 w-full px-4 md:px-0 transform -translate-y-10 flex items-center justify-center pt-20">
+				<div
+					class="col-span-12 md:col-start-3 md:col-span-8 lg:col-start-4 lg:col-span-6">
+					<div
+						class="w-full p-4 bg-white border border-gray-200 rounded-lg shadow-sm sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
+
+
+						<form class="space-y-6" th:action="@{/user/add-contact}"
+							th:object="${contactDTO}" method="post"
+							enctype="multipart/form-data" novalidate>
+							<h3 class="text-3xl font-bold text-gray-900 dark:text-white">Add
+								contact</h3>
+							<p
+								class="text-sm font-medium text-gray-900 dark:text-white -mt-4">This
+								contact will be stored on cloud, your can directly email this
+								contact from SCM.</p>
+
+
+							<div>
+								<label for="name"
+									class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contact
+									name</label> <input type="text" name="name" id="name"
+									th:field="*{name}" placeholder="Enter your name."
+									class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+									required />
+								<p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+									class="text-red-900 px-1">Name is required.</p>
+							</div>
+
+
+							<div>
+								<label for="email"
+									class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contact
+									email</label> <input type="email" name="email" id="email"
+									th:field="*{email}" placeholder="Enter your mail ID."
+									class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+									required />
+								<p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+									class="text-red-900 px-1">Email is required.</p>
+							</div>
+
+
+							<div>
+								<label for="phone"
+									class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contact
+									number</label> <input type="number" maxlength=10 name="phoneNumber"
+									id="phoneNumber" th:field="*{phoneNumber}"
+									placeholder="Enter your phone number."
+									class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+									required />
+								<p th:if="${#fields.hasErrors('phoneNumber')}"
+									th:errors="*{phoneNumber}" class="text-red-900 px-1">Phone
+									number is required.</p>
+							</div>
+
+
+							<div>
+								<label
+									class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+									for="file_input">Contact profile pic</label> <input
+									class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+									aria-describedby="file_input_help" id="file_input" type="file"
+									th:field="*{profilePic}">
+								<p class="mt-1 text-sm text-gray-500 dark:text-gray-300"
+									id="file_input_help">SVG, PNG, JPG or GIF (MAX. 800x400px).</p>
+
+								<img class="max-h-52 mx-auto" id="preview_image" src="">
+							</div>
+
+
+							<div>
+								<label
+									class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+									for="dob">Date of birth</label>
+								<div class="relative w-full">
+									<div
+										class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+										<svg class="w-4 h-4 text-gray-500 dark:text-gray-400"
+											aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+											fill="currentColor" viewBox="0 0 20 20">
+      									<path
+												d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
+    								</svg>
+									</div>
+									<input id="dob" type="date" th:field="*{dob}"
+										class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+										placeholder="Select date">
+								</div>
+								<p th:if="${#fields.hasErrors('dob')}" th:errors="*{dob}"
+									class="text-red-900 px-1">Future Dates not allowed.</p>
+							</div>
+
+
+							<div class="flex items-center">
+								<input id="link-checkbox" type="checkbox" value=""
+									th:field="*{favourite}"
+									class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+								<label for="link-checkbox"
+									class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Marks
+									as Favorite. </label>
+							</div>
+
+							<div class="flex">
+								<button type="submit"
+									class="max-w-xs mx-auto block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+									Save</button>
+								<button type="reset"
+									class="max-w-xs mx-auto block text-white bg-orange-700 hover:bg-orange-800 focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800">
+									Reset</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+
+	<script>
+		imagePreview();
+	</script>
+
+	<script th:inline="javascript">
+		/* 	this attribute helps read the session value it looks like it is commented but it is not commented. */
+		let toastMessage = /*[[${toastMessage}]]*/null;
+		let toastType = /*[[${toastType}]]*/null;
+
+		if (toastMessage && toastType) {
+			console.log("toastMessage and ToastType Recieved");
+			showToast(toastMessage, toastType);
+		}
+	</script>
+</body>
+</html>
