@@ -64,8 +64,7 @@
 					</form>
 					<div id="social-login-container" class="mt-4">
 						<a th:href="@{'/oauth2/authorization/google'}"
-							class="login-with-google-btn">Sign in with Google</a> 
-							<a
+							class="login-with-google-btn">Sign in with Google</a> <a
 							th:href="@{'/oauth2/authorization/github'}"
 							class="login-with-github-btn">Sign in with GitHub</a>
 					</div>
@@ -74,16 +73,37 @@
 		</div>
 	</div>
 	<script th:inline="javascript">
-		const error = /*[[${param.error}]]*/null;
 		const logout = /*[[${param.logout}]]*/null;
 
-		if (error) {
-			showToast("Invalid username or password", "error");
-		}
+		const toastMessageVerification = /*[[${toastMessage}]]*/null;
+		const toastTypeVerification = /*[[${toastType}]]*/null;
+
+		const toastMessage = /*[[${session.toastMessage}]]*/null;
+		const toastType = /*[[${session.toastType}]]*/null;
 
 		if (logout) {
 			showToast("You have been logged out.", "success");
 		}
+
+		if (toastMessageVerification && toastTypeVerification) {
+			showToast(toastMessageVerification, toastTypeVerification);
+		}
+
+		if (toastMessage && toastType) {
+			
+	        showToast(toastType, toastMessage);
+
+	        // Clear toast message from session after showing it
+	        fetch('/toast-session', {
+	            method: 'DELETE'
+	        }).then(response => {
+	            if (!response.ok) {
+	                console.error("Failed to clear toast session.");
+	            }
+	        }).catch(error => {
+	            console.error("Error clearing toast session:", error);
+	        });
+	    }
 	</script>
 </body>
 

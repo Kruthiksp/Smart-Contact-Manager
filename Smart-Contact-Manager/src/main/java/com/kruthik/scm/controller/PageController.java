@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import com.kruthik.scm.dtos.UserDTO;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 public class PageController {
 
@@ -13,7 +15,7 @@ public class PageController {
 	public String index() {
 		return "redirect:/home";
 	}
-	
+
 	@GetMapping("/home")
 	public String home() {
 		return "home";

@@ -62,7 +62,7 @@ public class UserController {
 		String email = authentication.getName();
 
 		/* Fetching All the Contacts */
-		Page<Contact> allContactsByUserId;// = contactService.getAllContactsByUserId(email, pageNumber, pageSize);
+		Page<Contact> allContactsByUserId = contactService.getAllContactsByUserId(email, pageNumber, pageSize);
 
 		if (keyword != null && !keyword.isEmpty()) {
 			allContactsByUserId = contactService.getAllContactsByUserId(email, keyword, pageNumber, pageSize);

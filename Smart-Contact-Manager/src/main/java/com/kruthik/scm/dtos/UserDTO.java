@@ -54,4 +54,6 @@ public class UserDTO {
 
 	private String providerId;
 	private List<Contact> contacts;
+	
+	private String emailToken;
 }

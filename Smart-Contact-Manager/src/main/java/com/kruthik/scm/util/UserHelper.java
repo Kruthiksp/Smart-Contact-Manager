@@ -1,10 +1,16 @@
 package com.kruthik.scm.util;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.stereotype.Component;
 
+@Component
 public class UserHelper {
+
+	@Value("${mailtrap.email.verification.link}")
+	private String verificationUrl;
 
 	/**
 	 * @param principal
@@ -38,5 +44,9 @@ public class UserHelper {
 		}
 
 		return email;
+	}
+
+	public String generateLinkForEmailVerification(String token) {
+		return verificationUrl + token;
 	}
 }

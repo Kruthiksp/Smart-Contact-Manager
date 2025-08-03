@@ -9,4 +9,8 @@ public interface UserService {
 
 	User findUserByEmail(String email);
 
+	User findUserByVerificationToken(String token);
+
+	int updateEnable(boolean enabled, boolean emailVerified, boolean phoneNumberVerified, String emailToken);
+
 }
