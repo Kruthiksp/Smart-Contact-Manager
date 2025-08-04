@@ -6,8 +6,6 @@ import com.kruthik.scm.dtos.ContactDTO;
 import com.kruthik.scm.dtos.ContactDTO_ForRetrieving;
 import com.kruthik.scm.entities.Contact;
 
-import jakarta.validation.Valid;
-
 public interface ContactService {
 
 	Contact addContact(ContactDTO contactDTO, String userEmail);
@@ -18,6 +16,10 @@ public interface ContactService {
 
 	Page<Contact> getAllContactsByUserId(String email, String keyword, int pageNumber, int pageSize);
 
+	Page<Contact> getFavoriteContactsByUserId(String email, int pageNumber, int pageSize);
+
+	Page<Contact> getFavoriteContactsByUserId(String email, String keyword, int pageNumber, int pageSize);
+	
 	int updateContact(ContactDTO contactDTO, String email);
 
 	void deleteContact(int contactId);

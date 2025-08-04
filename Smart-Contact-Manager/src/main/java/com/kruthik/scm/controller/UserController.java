@@ -1,5 +1,7 @@
 package com.kruthik.scm.controller;
 
+import java.security.Principal;
+
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -12,8 +14,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kruthik.scm.dtos.ContactDTO;
 import com.kruthik.scm.dtos.ContactDTO_ForRetrieving;
+import com.kruthik.scm.dtos.SuggestionDTO;
 import com.kruthik.scm.entities.Contact;
 import com.kruthik.scm.services.ContactService;
+import com.kruthik.scm.services.UserService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -23,6 +27,7 @@ import lombok.RequiredArgsConstructor;
 public class UserController {
 
 	private final ContactService contactService;
+	private final UserService userService;
 
 	@GetMapping("/dashboard")
 	public String userDashboard() {
@@ -80,6 +85,33 @@ public class UserController {
 		return "user/viewContacts";
 	}
 
+	@GetMapping("/favorite-contacts")
+	public String favoriteContacts(@RequestParam(value = "pageNumber", defaultValue = "0") int pageNumber,
+			@RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
+			@RequestParam(required = false) String keyword, Model model, Authentication authentication) {
+
+		/* Fetching the current logged in user's email id */
+		String email = authentication.getName();
+
+		/* Fetching All the Contacts */
+		Page<Contact> allContactsByUserId = contactService.getAllContactsByUserId(email, pageNumber, pageSize);
+
+		if (keyword != null && !keyword.isEmpty()) {
+			allContactsByUserId = contactService.getFavoriteContactsByUserId(email, keyword, pageNumber, pageSize);
+			model.addAttribute("keyword", keyword);
+		} else {
+			allContactsByUserId = contactService.getFavoriteContactsByUserId(email, pageNumber, pageSize);
+		}
+
+		/* Setting Contacts to model */
+		model.addAttribute("contacts", allContactsByUserId.getContent()); // actual list of contacts
+		model.addAttribute("currentPage", pageNumber);
+		model.addAttribute("pageSize", pageSize);
+		model.addAttribute("totalPages", allContactsByUserId.getTotalPages());
+
+		return "user/viewContacts";
+	}
+
 	@GetMapping("/update-contact/{contactId}")
 	public String updateContact(@PathVariable int contactId, Model model) {
 
@@ -100,4 +132,16 @@ public class UserController {
 		return "redirect:/user/view-contacts";
 	}
 
+	@GetMapping("/suggestion")
+	public String suggestion(Model model, Principal principal) {
+
+		String loggedInUserEmail = principal.getName();
+
+		SuggestionDTO suggestionDTO = new SuggestionDTO();
+		suggestionDTO.setUserEmailId(loggedInUserEmail);
+		model.addAttribute("suggestion", suggestionDTO);
+		return "/user/suggestion";
+	}
+
 }
+

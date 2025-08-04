@@ -1,17 +1,23 @@
 package com.kruthik.scm.controller;
 
+import java.security.Principal;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kruthik.scm.dtos.ContactDTO;
+import com.kruthik.scm.dtos.SuggestionDTO;
 import com.kruthik.scm.dtos.UserDTO;
 import com.kruthik.scm.entities.Contact;
+import com.kruthik.scm.entities.Suggestion;
 import com.kruthik.scm.entities.User;
 import com.kruthik.scm.services.ContactService;
+import com.kruthik.scm.services.SuggestionService;
 import com.kruthik.scm.services.UserService;
 
 import jakarta.validation.Valid;
@@ -23,6 +29,7 @@ public class ProcessingController {
 
 	private final UserService userService;
 	private final ContactService contactService;
+	private final SuggestionService suggestionService;
 
 	@PostMapping("/do-register")
 	public String registration(@Valid @ModelAttribute UserDTO userDTO, BindingResult bindingResult,
@@ -103,6 +110,27 @@ public class ProcessingController {
 		}
 
 		return "redirect:/user/view-contacts";
+	}
+
+	@PostMapping("/user/suggestion")
+	public String suggestion(@Valid @ModelAttribute SuggestionDTO suggestionDTO, BindingResult bindingResult,
+			RedirectAttributes redirectAttributes, Model model, Principal principal) {
+
+		if (bindingResult.hasErrors()) {
+			return "user/suggestion";
+		}
+
+		Suggestion saveSuggestion = suggestionService.saveSuggestion(suggestionDTO);
+
+		if (saveSuggestion != null) {
+			redirectAttributes.addFlashAttribute("toastMessage", "Suggestion Sent Successfully!");
+			redirectAttributes.addFlashAttribute("toastType", "success");
+			return "redirect:/user/profile";
+		} else {
+			redirectAttributes.addFlashAttribute("toastMessage", "Failed to send Suggestion!");
+			redirectAttributes.addFlashAttribute("toastType", "warning");
+			return "redirect:/user/suggestion";
+		}
 	}
 
 }

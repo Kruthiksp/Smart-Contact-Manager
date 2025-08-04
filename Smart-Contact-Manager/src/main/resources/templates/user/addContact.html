@@ -9,9 +9,14 @@
 	<div id="container" class="sm:pl-64">
 
 		<div th:if="${loggedInUser}">
-
+			<!-- sidebar if the ADMIN user is logged in -->
+			<div th:if="${loggedInUser.role.name == 'ADMIN'}">
+				<div th:replace="~{admin/adminSidebar :: sidebar}"></div>
+			</div>
 			<!-- sidebar if the user is logged in -->
-			<div th:replace="~{user/sidebar :: sidebar}"></div>
+			<div th:unless="${loggedInUser.role.name == 'ADMIN'}">
+				<div th:replace="~{user/sidebar :: sidebar}"></div>
+			</div>
 
 			<!-- Form -->
 			<div
@@ -144,7 +149,6 @@
 		let toastType = /*[[${toastType}]]*/null;
 
 		if (toastMessage && toastType) {
-			console.log("toastMessage and ToastType Recieved");
 			showToast(toastMessage, toastType);
 		}
 	</script>

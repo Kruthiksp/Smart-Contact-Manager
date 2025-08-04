@@ -3,6 +3,7 @@ package com.kruthik.scm.entities;
 import java.util.List;
 
 import com.kruthik.scm.enums.Providers;
+import com.kruthik.scm.enums.Role;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -45,8 +46,8 @@ public class User {
 	private boolean emailVerified = false;
 	@Builder.Default
 	private boolean phoneNumberVerified = false;
-	@Enumerated(EnumType.STRING)
 	@Builder.Default
+	@Enumerated(EnumType.STRING)
 	private Providers provider = Providers.SELF;
 	private String providerId;
 
@@ -54,4 +55,8 @@ public class User {
 	private List<Contact> contacts;
 
 	private String emailToken;
+
+	@Builder.Default
+	@Enumerated(EnumType.STRING)
+	private Role role = Role.USER;
 }

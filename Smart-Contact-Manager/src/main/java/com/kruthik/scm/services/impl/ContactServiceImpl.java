@@ -98,4 +98,28 @@ public class ContactServiceImpl implements ContactService {
 		return contactRepository.findByUserAndNameContainingIgnoreCase(userByEmail, keyword, pageable);
 	}
 
+	@Override
+	public Page<Contact> getFavoriteContactsByUserId(String email, int pageNumber, int pageSize) {
+
+		User userByEmail = null;
+		Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by(Sort.Direction.ASC, "name"));
+
+		if (userRepository.existsByEmail(email)) {
+			userByEmail = userRepository.findByEmail(email).orElse(null);
+		}
+		return contactRepository.findByUserAndFavouriteTrue(userByEmail, pageable);
+
+	}
+
+	@Override
+	public Page<Contact> getFavoriteContactsByUserId(String email, String keyword, int pageNumber, int pageSize) {
+		User userByEmail = null;
+		Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by(Sort.Direction.ASC, "name"));
+
+		if (userRepository.existsByEmail(email)) {
+			userByEmail = userRepository.findByEmail(email).orElse(null);
+		}
+		return contactRepository.findByUserAndFavouriteTrueAndNameContainingIgnoreCase(userByEmail, keyword, pageable);
+	}
+
 }

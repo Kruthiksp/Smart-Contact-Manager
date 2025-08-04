@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html
+	th:replace="~{base :: parent(~{:: #container}, ~{:: title}, ~{:: script})}">
+<head>
+<meta charset="UTF-8">
+<title>Add Contact</title>
+</head>
+<body>
+	<div id="container" class="sm:pl-64">
+
+		<div th:if="${loggedInUser}">
+			<!-- sidebar if the ADMIN user is logged in -->
+			<div th:if="${loggedInUser.role.name == 'ADMIN'}">
+				<div th:replace="~{admin/adminSidebar :: sidebar}"></div>
+			</div>
+			<!-- sidebar if the user is logged in -->
+			<div th:unless="${loggedInUser.role.name == 'ADMIN'}">
+				<div th:replace="~{user/sidebar :: sidebar}"></div>
+			</div>
+
+			<!-- Form -->
+			<div
+				class="grid grid-cols-12 w-full px-4 md:px-0 transform -translate-y-10 flex items-center justify-center pt-20">
+				<div
+					class="col-span-12 md:col-start-3 md:col-span-8 lg:col-start-4 lg:col-span-6 flex items-center justify-center">
+					<div
+						class="w-full p-4 bg-white border border-gray-200 rounded-lg shadow-sm sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
+
+
+						<form class="space-y-6" th:action="@{/user/suggestion}"
+							th:object="${suggestion}" method="post">
+							<h3 class="text-3xl font-bold text-gray-900 dark:text-white">Suggestion</h3>
+							<p
+								class="text-sm font-medium text-gray-900 dark:text-white -mt-4">Help
+								us improve by providing your Suggestions.</p>
+
+
+							<div>
+								<label for="email"
+									class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email
+									Id</label> <input type="text" name="userEmailId" id="email"
+									th:field="*{userEmailId}" placeholder="Enter your email Id."
+									class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+									readonly />
+							</div>
+
+
+							<div>
+								<label for="suggestionMessage"
+									class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Suggestion
+								</label>
+								<textarea name="suggestionMessage" id="suggestionMessage"
+									th:field="*{suggestionMessage}"
+									placeholder="Enter your Suggestion Here."
+									class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+									required></textarea>
+								<p th:if="${#fields.hasErrors('suggestionMessage')}"
+									th:errors="*{suggestionMessage}" class="text-red-900 px-1">Suggestion
+									is required.</p>
+							</div>
+
+							<div class="flex">
+								<button type="submit"
+									class="max-w-xs mx-auto block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+									Send</button>
+								<button type="reset"
+									class="max-w-xs mx-auto block text-white bg-orange-700 hover:bg-orange-800 focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800">
+									Reset</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+
+	<script th:inline="javascript">
+		/* 	this attribute helps read the session value it looks like it is commented but it is not commented. */
+		let toastMessage = /*[[${toastMessage}]]*/null;
+		let toastType = /*[[${toastType}]]*/null;
+
+		if (toastMessage && toastType) {
+			console.log("toastMessage and ToastType Recieved");
+			showToast(toastMessage, toastType);
+		}
+	</script>
+</body>
+</html>

@@ -2,11 +2,16 @@ package com.kruthik.scm.services.impl;
 
 import java.util.UUID;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.kruthik.scm.dtos.UserDTO;
 import com.kruthik.scm.entities.User;
+import com.kruthik.scm.enums.Role;
 import com.kruthik.scm.exceptions.UserNotFoundException;
 import com.kruthik.scm.repositories.UserRepository;
 import com.kruthik.scm.services.UserService;
@@ -43,7 +48,13 @@ public class UserServiceImpl implements UserService {
 
 				emailServiceImpl.sendMail(user.getEmail(), linkForEmailVerification);
 
-				return userRepository.save(user);
+				User savedUser = userRepository.save(user);
+
+				if (savedUser.getId() == 1) {
+					userRepository.assignAdminRole(savedUser.getId(), Role.ADMIN);
+				}
+
+				return savedUser;
 			}
 		}
 		return null;
@@ -63,8 +74,20 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public int updateEnable(boolean enabled, boolean emailVerified, boolean phoneNumberVerified,
-			String emailToken) {
+	public int updateEnable(boolean enabled, boolean emailVerified, boolean phoneNumberVerified, String emailToken) {
 		return userRepository.updateEnable(enabled, emailVerified, phoneNumberVerified, emailToken);
 	}
+
+	@Override
+	public Page<User> findAllUsers(int pageNumber, int pageSize) {
+		Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by(Sort.Direction.ASC, "id"));
+		return userRepository.findAll(pageable);
+	}
+
+	@Override
+	public Page<User> findAllUsers(String keyword, int pageNumber, int pageSize) {
+		Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by(Sort.Direction.ASC, "id"));
+		return userRepository.findAllByNameContainingIgnoreCase(keyword, pageable);
+	}
+
 }

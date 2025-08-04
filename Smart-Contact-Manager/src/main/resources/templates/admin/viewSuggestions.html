@@ -3,17 +3,18 @@
 	th:replace="~{base :: parent(~{:: #container}, ~{:: title}, ~{:: script})}">
 <head>
 <meta charset="UTF-8">
-<title>View Contacts</title>
+<title>View Suggestions</title>
 </head>
 <body>
 	<div id="container" class="sm:pl-64">
 		<div th:if="${loggedInUser}">
 			<!-- sidebar if the ADMIN user is logged in -->
-			<div th:if="${loggedInUser.role.name == 'ADMIN'}">
+			<div th:if="${loggedInUser.role == 'ADMIN'}">
+
 				<div th:replace="~{admin/adminSidebar :: sidebar}"></div>
 			</div>
 			<!-- sidebar if the user is logged in -->
-			<div th:unless="${loggedInUser.role.name == 'ADMIN'}">
+			<div th:unless="${loggedInUser.role == 'ADMIN'}">
 				<div th:replace="~{user/sidebar :: sidebar}"></div>
 			</div>
 		</div>
@@ -43,22 +44,22 @@
 						<ul class="py-1 text-sm text-gray-700 dark:text-gray-200"
 							aria-labelledby="dropdownActionButton">
 							<li><a
-								th:href="@{'/user/view-contacts?pageNumber=0&pageSize=5'}"
+								th:href="@{'/admin/view-suggestions?pageNumber=0&pageSize=5'}"
 								class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">5</a>
 							</li>
 							<li><a
-								th:href="@{'/user/view-contacts?pageNumber=0&pageSize=10'}"
+								th:href="@{'/admin/view-suggestions?pageNumber=0&pageSize=10'}"
 								class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">10</a>
 							</li>
 							<li><a
-								th:href="@{'/user/view-contacts?pageNumber=0&pageSize=20 '}"
+								th:href="@{'/admin/view-suggestions?pageNumber=0&pageSize=20'}"
 								class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">20</a></li>
 						</ul>
 					</div>
 				</div>
 
 				<label for="table-search" class="sr-only">Search</label>
-				<form th:action="@{/user/view-contacts}" method="get"
+				<form th:action="@{/admin/view-suggestions}" method="get"
 					class="relative">
 					<div
 						class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -83,45 +84,29 @@
 
 				</div>
 			</div>
-			<table id="contacts"
+			<table id="suggestions"
 				class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
 				<thead
 					class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
 					<tr>
-						<th scope="col" class="px-6 py-3 text-center">Contact pic</th>
-						<th scope="col" class="px-6 py-3 text-center">Name</th>
-						<th scope="col" class="px-6 py-3 text-center">Email Id</th>
-						<th scope="col" class="px-6 py-3 text-center">Number</th>
-						<th scope="col" class="px-6 py-3 text-center">Favorite</th>
-						<th scope="col" class="px-6 py-3 text-center">Action</th>
+						<th scope="col" class="px-6 py-3 text-center">Suggestion Id</th>
+						<th scope="col" class="px-6 py-3 text-center">Sent On</th>
+						<th scope="col" class="px-6 py-3 text-center">Sent By</th>
+						<th scope="col"
+							class="px-6 py-3 text-center w-[30rem] break-words">Suggestion</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:each="contact: ${contacts}"
+					<tr th:each="suggestion: ${suggestions}"
 						class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
-						<th scope="row"
-							class="flex justify-center items-center px-2 py-4 text-gray-900 whitespace-nowrap dark:text-white">
-							<img class="w-10 h-10 rounded-full"
-							th:src="${contact.profilePic ?: '../../images/default-profile-pic.jpg'}"
-							alt="">
-						</th>
-						<td th:text="${contact.name}" class="px-6 py-4 text-center">name</td>
-						<td th:text="${contact.email}" class="px-6 py-4 text-center">email</td>
-						<td th:text="${contact.phoneNumber}" class="px-6 py-4 text-center">phone
-							number</td>
-						<td class="flex justify-center items-center px-6 py-4"><i
-							class="fa-solid fa-star" th:if="${contact.favourite}"></i></td>
-						<td class="px-6 py-4">
-							<div class="flex justify-center items-center space-x-4">
-								<a th:href="@{/user/update-contact/{id}(id=${contact.id})}"><i
-									class="fa-solid fa-pencil"></i></a> <a
-									onclick="return confirm('Are you sure you want to delete this contact?');"
-									th:href="@{/user/delete-contact/{id}(id=${contact.id})}"><i
-									class="fa-solid fa-trash"></i></a> <a
-									th:href="@{/user/view-contact/{id}(id=${contact.id})}"><i
-									class="fa-solid fa-eye"></i></a>
-							</div>
-						</td>
+						<td th:text="${suggestion.suggestionId}"
+							class="px-6 py-4 text-center">Suggestion Id</td>
+						<td th:text="${suggestion.sentDate}" class="px-6 py-4 text-center">Sent
+							on</td>
+						<td th:text="${suggestion.userEmailId}"
+							class="px-6 py-4 text-center">sent By</td>
+						<td th:text="${suggestion.suggestionMessage}"
+							class="px-6 py-4 text-center w-[30rem] break-words">Suggestion</td>
 					</tr>
 				</tbody>
 			</table>
@@ -131,7 +116,7 @@
 
 						<!-- Previous Button -->
 						<li><a
-							th:href="@{${currentPage > 0} ? '/user/view-contacts?pageNumber=' + (${currentPage - 1}) + '&pageSize=' + ${pageSize} : '#'}"
+							th:href="@{${currentPage > 0} ? '/admin/view-suggestions?pageNumber=' + (${currentPage - 1}) + '&pageSize=' + ${pageSize} : '#'}"
 							th:classappend="${currentPage == 0} ? ' cursor-not-allowed opacity-50' : ''"
 							class="flex items-center justify-center px-4 h-10 ms-0 leading-tight 
 	   text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg 
@@ -143,7 +128,7 @@
 						<!-- Page Number Buttons -->
 						<li th:each="index : ${#numbers.sequence(0, totalPages - 1)}">
 							<a
-							th:href="@{'/user/view-contacts?pageNumber=' + ${index} + '&pageSize=' + ${pageSize}}"
+							th:href="@{'/admin/view-suggestions?pageNumber=' + ${index} + '&pageSize=' + ${pageSize}}"
 							th:classappend="${currentPage == index} ? ' bg-blue-500 text-white dark:bg-blue-600 dark:text-white' : ''"
 							class="flex items-center justify-center px-4 h-10 leading-tight 
 	   text-gray-500 bg-white border border-gray-300 
@@ -156,7 +141,7 @@
 
 						<!-- Next Button -->
 						<li><a
-							th:href="@{${currentPage < totalPages - 1} ? '/user/view-contacts?pageNumber=' + (${currentPage + 1}) + '&pageSize=' + ${pageSize} : '#'}"
+							th:href="@{${currentPage < totalPages - 1} ? '/admin/view-suggestions?pageNumber=' + (${currentPage + 1}) + '&pageSize=' + ${pageSize} : '#'}"
 							th:classappend="${currentPage == totalPages - 1} ? ' cursor-not-allowed opacity-50' : ''"
 							class="flex items-center justify-center px-4 h-10 leading-tight 
 	   text-gray-500 bg-white border border-gray-300 rounded-e-lg 
@@ -173,22 +158,22 @@
 	<script
 		src="https://cdn.jsdelivr.net/npm/@linways/table-to-excel@1.0.4/dist/tableToExcel.min.js"></script>
 	<script th:inline="javascript">
-		/* 	this attribute helps read the session value it looks like it is commented but it is not commented. */
+		/* /* 	this attribute helps read the session value it looks like it is commented but it is not commented. */
 		let toastMessage = /*[[${toastMessage}]]*/null;
 		let toastType = /*[[${toastType}]]*/null;
 
 		/*
 			-> The \/*[[...]]*\/ syntax is a special Thymeleaf inlined JavaScript expression.
 			-> It may look like a comment, but Thymeleaf parses and replaces it at server-side.
-		 */
+		 *\/
 
 		if (toastMessage && toastType) {
 			showToast(toastMessage, toastType);
-		}
+		} */
 
 		function exportData() {
-			TableToExcel.convert(document.getElementById("contacts"), {
-				name : "contacts.xlsx",
+			TableToExcel.convert(document.getElementById("suggestions"), {
+				name : "suggestions.xlsx",
 				sheet : {
 					name : "Sheet 1"
 				}

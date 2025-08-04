@@ -7,9 +7,15 @@
 </head>
 <body>
 	<div id="container" class="sm:pl-64">
-		<!-- sidebar if the user is logged in -->
 		<div th:if="${loggedInUser}">
-			<div th:replace="~{user/sidebar :: sidebar}"></div>
+			<!-- sidebar if the ADMIN user is logged in -->
+			<div th:if="${loggedInUser.role.name == 'ADMIN'}">
+				<div th:replace="~{admin/adminSidebar :: sidebar}"></div>
+			</div>
+			<!-- sidebar if the user is logged in -->
+			<div th:unless="${loggedInUser.role.name == 'ADMIN'}">
+				<div th:replace="~{user/sidebar :: sidebar}"></div>
+			</div>
 		</div>
 
 		<div class="pt-20">
@@ -92,5 +98,15 @@
 				length.</p>
 		</div>
 	</div>
+	<script th:inline="javascript">
+		/* 	this attribute helps read the session value it looks like it is commented but it is not commented. */
+		let toastMessage = /*[[${toastMessage}]]*/null;
+		let toastType = /*[[${toastType}]]*/null;
+
+		if (toastMessage && toastType) {
+			console.log("toastMessage and ToastType Recieved");
+			showToast(toastMessage, toastType);
+		}
+	</script>
 </body>
 </html>

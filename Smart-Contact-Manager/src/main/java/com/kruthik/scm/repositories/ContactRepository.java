@@ -39,5 +39,9 @@ public interface ContactRepository extends JpaRepository<Contact, Integer> {
 	                       @Param("dob") LocalDate dob,
 	                       @Param("favourite") boolean favourite,
 	                       @Param("user") User user);
+	
+	Page<Contact> findByUserAndFavouriteTrue(User user, Pageable pageable);
+
+	Page<Contact> findByUserAndFavouriteTrueAndNameContainingIgnoreCase(User user, String keyword, Pageable pageable);
 
 }

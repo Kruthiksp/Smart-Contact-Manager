@@ -4,7 +4,10 @@ import java.util.List;
 
 import com.kruthik.scm.entities.Contact;
 import com.kruthik.scm.enums.Providers;
+import com.kruthik.scm.enums.Role;
 
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -54,6 +57,9 @@ public class UserDTO {
 
 	private String providerId;
 	private List<Contact> contacts;
-	
+
 	private String emailToken;
+
+	@Builder.Default
+	private Role role = Role.USER;
 }

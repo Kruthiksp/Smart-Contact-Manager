@@ -6,7 +6,7 @@ import org.springframework.context.annotation.PropertySource;
 
 @SpringBootApplication
 @PropertySource({ "classpath:/cloudinary.properties", "classpath:/oAuthConfig.properties",
-		"classpath:/mailStrapConfig.properties" })
+		"classpath:/mailTrapConfig.properties" })
 public class SmartContactManagerApplication {
 
 	public static void main(String[] args) {

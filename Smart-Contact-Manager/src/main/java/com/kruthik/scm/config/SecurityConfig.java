@@ -26,13 +26,14 @@ public class SecurityConfig {
 	private final AuthenticationSuccessHandler authenticationSuccessHandler;
 	private final AuthFailureHandler authFailureHandler;
 
-
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http.csrf(csrf -> csrf.disable())
 			.authorizeHttpRequests(auth -> auth
 				.requestMatchers("/js/**", "/css/**", "/images/**","/", "/login", "/signup", "/do-register", "/home", "/auth/**")
-				.permitAll().anyRequest().authenticated())
+				.permitAll()
+				.requestMatchers("/admin/**").hasRole("ADMIN")
+				.anyRequest().authenticated())
 			.userDetailsService(userDetailsService)
 			.formLogin(form -> form.loginPage("/login")
 				.usernameParameter("email")

@@ -7,9 +7,15 @@
 </head>
 <body>
 	<div id="container" class="sm:pl-64">
-		<!-- sidebar if the user is logged in -->
 		<div th:if="${loggedInUser}">
-			<div th:replace="~{user/sidebar :: sidebar}"></div>
+			<!-- sidebar if the ADMIN user is logged in -->
+			<div th:if="${loggedInUser.role.name == 'ADMIN'}">
+				<div th:replace="~{admin/adminSidebar :: sidebar}"></div>
+			</div>
+			<!-- sidebar if the user is logged in -->
+			<div th:unless="${loggedInUser.role.name == 'ADMIN'}">
+				<div th:replace="~{user/sidebar :: sidebar}"></div>
+			</div>
 		</div>
 
 		<div class="pt-20">
