@@ -9,6 +9,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.kruthik.scm.dtos.ResetPasswordDTO;
 import com.kruthik.scm.dtos.UserDTO;
 import com.kruthik.scm.entities.User;
 import com.kruthik.scm.enums.Role;
@@ -88,6 +89,32 @@ public class UserServiceImpl implements UserService {
 	public Page<User> findAllUsers(String keyword, int pageNumber, int pageSize) {
 		Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by(Sort.Direction.ASC, "id"));
 		return userRepository.findAllByNameContainingIgnoreCase(keyword, pageable);
+	}
+
+	@Override
+	public void deleteById(int userId) {
+		userRepository.deleteById(userId);
+	}
+
+	@Override
+	public UserDTO findById(int userId) {
+		User byId = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("User Not Found"));
+		return userMapper.entityToDto(byId);
+	}
+
+	@Override
+	public int updateUser(UserDTO userDTO) {
+		String password = passwordEncoder.encode(userDTO.getPassword());
+
+		return userRepository.updateUser(userDTO.getId(), userDTO.getName(), userDTO.getPhoneNumber(), password);
+	}
+
+	@Override
+	public int resetPassword(ResetPasswordDTO resetPasswordDTO) {
+		String newPassword = passwordEncoder.encode(resetPasswordDTO.getPassword());
+
+		return userRepository.resetPassword(resetPasswordDTO.getEmail(), resetPasswordDTO.getPhoneNumber(),
+				newPassword);
 	}
 
 }

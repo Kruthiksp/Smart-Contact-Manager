@@ -47,7 +47,7 @@
 							</div>
 							<label for="remember"
 								class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Remember
-								me</label> <a href="#"
+								me</label> <a th:href="@{/resetPassword}"
 								class="ms-auto text-sm text-blue-700 hover:underline dark:text-blue-500">Forgot
 								Password?</a>
 						</div>
@@ -75,8 +75,8 @@
 	<script th:inline="javascript">
 		const logout = /*[[${param.logout}]]*/null;
 
-		const toastMessageVerification = /*[[${toastMessage}]]*/null;
-		const toastTypeVerification = /*[[${toastType}]]*/null;
+		const toastMessage1 = /*[[${toastMessage}]]*/null;
+		const toastType1 = /*[[${toastType}]]*/null;
 
 		const toastMessage = /*[[${session.toastMessage}]]*/null;
 		const toastType = /*[[${session.toastType}]]*/null;
@@ -85,13 +85,13 @@
 			showToast("You have been logged out.", "success");
 		}
 
-		if (toastMessageVerification && toastTypeVerification) {
-			showToast(toastMessageVerification, toastTypeVerification);
+		if (toastMessage1 && toastType1) {
+			showToast(toastMessage1, toastType1);
 		}
 
 		if (toastMessage && toastType) {
 			
-	        showToast(toastType, toastMessage);
+	        showToast(toastMessage, toastType);
 
 	        // Clear toast message from session after showing it
 	        fetch('/toast-session', {

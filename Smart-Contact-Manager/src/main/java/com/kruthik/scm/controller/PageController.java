@@ -4,9 +4,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.kruthik.scm.dtos.ResetPasswordDTO;
 import com.kruthik.scm.dtos.UserDTO;
-
-import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class PageController {
@@ -48,6 +47,14 @@ public class PageController {
 	@GetMapping("/login")
 	public String login() {
 		return "login";
+	}
+
+	@GetMapping("/resetPassword")
+	public String resetPassword(Model model) {
+
+		model.addAttribute("resetPasswordDTO", new ResetPasswordDTO());
+
+		return "user/reset-password";
 	}
 
 }

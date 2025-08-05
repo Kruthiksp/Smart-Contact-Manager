@@ -1,16 +1,14 @@
 package com.kruthik.scm.controller;
 
-import java.security.Principal;
-
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kruthik.scm.dtos.ContactDTO;
+import com.kruthik.scm.dtos.ResetPasswordDTO;
 import com.kruthik.scm.dtos.SuggestionDTO;
 import com.kruthik.scm.dtos.UserDTO;
 import com.kruthik.scm.entities.Contact;
@@ -114,7 +112,7 @@ public class ProcessingController {
 
 	@PostMapping("/user/suggestion")
 	public String suggestion(@Valid @ModelAttribute SuggestionDTO suggestionDTO, BindingResult bindingResult,
-			RedirectAttributes redirectAttributes, Model model, Principal principal) {
+			RedirectAttributes redirectAttributes) {
 
 		if (bindingResult.hasErrors()) {
 			return "user/suggestion";
@@ -131,6 +129,49 @@ public class ProcessingController {
 			redirectAttributes.addFlashAttribute("toastType", "warning");
 			return "redirect:/user/suggestion";
 		}
+	}
+
+	@PostMapping("/update-account")
+	public String updateAccount(@Valid @ModelAttribute UserDTO userDTO, BindingResult bindingResult,
+			RedirectAttributes redirectAttributes) {
+
+		if (bindingResult.hasErrors()) {
+			return "user/updateUser";
+		}
+
+		int updateUser = userService.updateUser(userDTO);
+
+		if (updateUser > 0) {
+			redirectAttributes.addFlashAttribute("toastMessage", "Details Updated Successfully!");
+			redirectAttributes.addFlashAttribute("toastType", "success");
+		} else {
+			redirectAttributes.addFlashAttribute("toastMessage", "Failed to Update Details!");
+			redirectAttributes.addFlashAttribute("toastType", "error");
+		}
+
+		return "redirect:/user/profile";
+	}
+
+	@PostMapping("/resetPassword")
+	public String resetPassword(@Valid @ModelAttribute ResetPasswordDTO resetPasswordDTO, BindingResult bindingResult,
+			RedirectAttributes redirectAttributes) {
+
+		if (bindingResult.hasErrors()) {
+			return "redirect:/resetPassword";
+		}
+
+		int updatedRows = userService.resetPassword(resetPasswordDTO);
+
+		if (updatedRows > 0) {
+			redirectAttributes.addFlashAttribute("toastMessage", "Password Reset Successfully!");
+			redirectAttributes.addFlashAttribute("toastType", "success");
+			return "redirect:/login";
+		} else {
+			redirectAttributes.addFlashAttribute("toastMessage", "Either email or phone number is wrong!");
+			redirectAttributes.addFlashAttribute("toastType", "error");
+			return "redirect:/resetPassword";
+		}
+
 	}
 
 }

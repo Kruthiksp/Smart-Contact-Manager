@@ -30,14 +30,14 @@ public class SecurityConfig {
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http.csrf(csrf -> csrf.disable())
 			.authorizeHttpRequests(auth -> auth
-				.requestMatchers("/js/**", "/css/**", "/images/**","/", "/login", "/signup", "/do-register", "/home", "/auth/**")
+				.requestMatchers("/js/**", "/css/**", "/images/**","/", "/login", "/signup", "/do-register", "/home", "/auth/**","/resetPassword")
 				.permitAll()
 				.requestMatchers("/admin/**").hasRole("ADMIN")
 				.anyRequest().authenticated())
 			.userDetailsService(userDetailsService)
 			.formLogin(form -> form.loginPage("/login")
 				.usernameParameter("email")
-				.defaultSuccessUrl("/home", true)
+				.defaultSuccessUrl("/user/profile", true)
 				.failureUrl("/login?error=true")
 				.permitAll()
 				.failureHandler(authFailureHandler))

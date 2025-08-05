@@ -15,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.kruthik.scm.dtos.ContactDTO;
 import com.kruthik.scm.dtos.ContactDTO_ForRetrieving;
 import com.kruthik.scm.dtos.SuggestionDTO;
+import com.kruthik.scm.dtos.UserDTO;
 import com.kruthik.scm.entities.Contact;
 import com.kruthik.scm.services.ContactService;
 import com.kruthik.scm.services.UserService;
@@ -143,5 +144,23 @@ public class UserController {
 		return "/user/suggestion";
 	}
 
-}
+	@GetMapping("/update-account/{userId}")
+	public String updateAccount(@PathVariable int userId, Model model) {
+		UserDTO byId = userService.findById(userId);
+		model.addAttribute("userDTO", byId);
 
+		return "user/updateUser";
+	}
+
+	@GetMapping("/delete-account/{userId}")
+	public String deleteAccount(@PathVariable int userId, Model model, RedirectAttributes redirectAttributes) {
+
+		userService.deleteById(userId);
+
+		redirectAttributes.addFlashAttribute("toastMessage", "Account Deleted Successfully!");
+		redirectAttributes.addFlashAttribute("toastType", "success");
+
+		return "redirect:/signup";
+	}
+
+}

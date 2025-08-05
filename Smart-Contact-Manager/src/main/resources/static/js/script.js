@@ -52,7 +52,6 @@ function showToast(message, type) {
 		newestOnTop: true,
 		preventDuplicates: true
 	};
-
 	switch (type) {
 		case 'success':
 			toastr.success(message);
@@ -69,14 +68,11 @@ function showToast(message, type) {
 		default:
 			console.warn('Unknown toast type:', type);
 	}
-
 }
 
 /*--------------------------------------------------------------------------------------------------------------------------------*/
 // Image Preview in add contact form
 function imagePreview() {
-
-	console.log("accessable")
 
 	document.getElementById("file_input").addEventListener("change", function(event) {
 		let file = event.target.files[0];

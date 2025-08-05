@@ -31,7 +31,17 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	@Query("update User u set u.role=:role where id=:userId")
 	int assignAdminRole(int userId, Role role);
 
+	@Transactional
+	@Modifying
+	@Query("update User u set u.name=:name, u.phoneNumber=:phoneNumber,u.password=:password where u.id=:userId")
+	int updateUser(int userId, String name, String phoneNumber, String password);
+
 	Page<User> findAll(Pageable pageable);
 
 	Page<User> findAllByNameContainingIgnoreCase(String keyword, Pageable pageable);
+
+	@Transactional
+	@Modifying
+	@Query("update User u set u.password=:newPassword where u.email=:email and u.phoneNumber=:phoneNumber")
+	int resetPassword(String email, String phoneNumber, String newPassword);
 }
