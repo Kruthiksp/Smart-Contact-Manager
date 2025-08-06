@@ -1,15 +1,14 @@
 <h1>Smart Contact Manager</h1>
 <pre>
 A secure and responsive contact management system built using Spring Boot, Thymeleaf, and MySQL. 
-Users can <b>register, log in, and manage their personal contacts</b>
+Users can <b>Register, Log in, and Manage their personal contacts</b>
 with features like:
--> Add, edit, and delete contacts
--> Search and filter contacts
+-> Add, Edit, and Delete contacts
+-> Search and Filter contacts
 -> Role-based access (admin/user)
 
-<h5>Technologies</h5>
-<b>Backend:</b> Spring Boot  Frontend: HTML, CSS, JS · DB: MySQL
+<h3>Technologies</h3>
+<b>Backend:</b> Spring Boot and Spring Security for authentication
 <b>Frontend:</b> HTML, TailwindCSS, JS, thymeleaf
-<b>DB:</b> MySQL
-and Uses <b>Spring Security</b> for authentication
+<b>Database:</b> MySQL
 </pre>
